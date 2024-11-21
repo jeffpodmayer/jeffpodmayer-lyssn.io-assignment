@@ -53,13 +53,15 @@ public class User {
 
     @Override
     public String toString() {
-        return STR."User{userId=\{userId}, fName='\{fName}\{'\''}, name='\{name}\{'\''}, signUpdate=\{signUpDate}\{'}'}";
+        return "User{userId=" + userId + ", fName=" + fName + " , name=" + name + " , signUpdate=" + signUpDate + "}";
     }
 
    //Method to connect to a database
-    private static Connection getConnection() throws SQLException {
-        String url = "jdbc:postgresql://localhost:5432/mydb";
-        return DriverManager.getConnection(url);
+   public  static Connection getConnection() throws SQLException {
+        String url = "jdbc:postgresql://localhost:5432/testdb";
+        String username = "jeffreypodmayer";
+        String password = "";
+        return DriverManager.getConnection(url, username, password);
     }
 
     public static Collection<User> getAllUsers() {
@@ -100,7 +102,7 @@ public class User {
     }
 
     public static User getUserByUserId(Long userId){
-        String query = "SELECT * FROM users WHERE userid ?";
+        String query = "SELECT * FROM users WHERE userid = ?";
         try(Connection connection = getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query)){
             preparedStatement.setLong(1,userId);
