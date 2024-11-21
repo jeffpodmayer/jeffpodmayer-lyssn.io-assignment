@@ -15,19 +15,16 @@ import static org.junit.jupiter.api.Assertions.*;
 public class UserTest {
 
     @Test
-    void testDatabaseConnection(){
-        try(Connection connection = User.getConnection()){
+    void testDatabaseConnection() throws SQLException {
+        try (Connection connection = User.getConnection()) {
             assertNotNull(connection);
             System.out.println("Success!");
-        } catch (SQLException e){
-            e.printStackTrace();
-            throw new RuntimeException("Database failed to connect!");
         }
     }
 
     @BeforeEach
-    void createUsersForTest(){
-        try(Connection connection = User.getConnection()){
+    void createUsersForTest() throws SQLException {
+        try (Connection connection = User.getConnection()){
             Statement stmt = connection.createStatement();
 
             stmt.execute("INSERT INTO users (userId, fname, name, signupdate) VALUES (1, 'Jeff', 'Podmayer', '2024-11-22 09:00:00')");
@@ -35,22 +32,16 @@ public class UserTest {
             stmt.execute("INSERT INTO users (userId, fname, name, signupdate) VALUES (3, 'Dan', 'Ford', '2024-11-22 09:15:00')");
             stmt.execute("INSERT INTO users (userId, fname, name, signupdate) VALUES (4, 'Carolyn', 'Blessing', '2024-11-22 09:20:00')");
             stmt.execute("INSERT INTO users (userId, fname, name, signupdate) VALUES (5, 'Malcolm', 'Griffiths', '2024-11-22 09:30:00')");
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
+            }
     }
 
     @AfterEach
-    void deleteCreatedUsers(){
-        try(Connection connection = User.getConnection()){
+    void deleteCreatedUsers() throws SQLException {
+        try (Connection connection = User.getConnection()) {
             Statement stmt = connection.createStatement();
 
             stmt.execute("DELETE FROM users");
             System.out.println("All users deleted.");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
     }
 
@@ -85,5 +76,4 @@ public class UserTest {
         assertEquals("Jonathan", updatedUser.getfName());
         System.out.println(updatedUser);
     }
-
 }

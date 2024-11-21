@@ -57,8 +57,8 @@ public class User {
     }
 
    public  static Connection getConnection() throws SQLException {
-        String url = "jdbc:postgresql://localhost:5432/testdb";
-        String username = "jeffreypodmayer";
+        String url = "jdbc:postgresql://localhost:5432/mydb";
+        String username = "postgres";
         String password = "";
         return DriverManager.getConnection(url, username, password);
     }
@@ -77,7 +77,7 @@ public class User {
                 Timestamp signupdate = rs.getTimestamp("signupdate");
                 users.add(new User(userid, fname, name, signupdate));
             }
-            }
+        }
         return users;
     }
 
@@ -114,5 +114,4 @@ public class User {
         }
         return null;
     }
-
 }
