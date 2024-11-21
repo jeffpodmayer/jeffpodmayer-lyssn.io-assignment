@@ -8,19 +8,19 @@ This is a simple Java application that interacts with a PostgreSQL database to m
   - Retrieve users by their `userId`.
   - Update a user 
 - **Testable**: JUnit tests are provided for verifying the functionality of the methods
-- **Code Snippets**
   
-'''java import domain.User;
+```java
 // Get all users
 Collection<User> users = User.getAllUsers();
 
 // Retrieve user by userId
-User user = User.getUserByUserId(12345);
+User user = User.getUserByUserId(1L);
 
 // Update a user
-user.fname = "Changed"
-user.name = "Name"
-User.updateUser(user);'''
+user.fname = "Jeff"
+user.name = "Podmayer"
+User.updateUser(user);
+```
 
 ## Requirements
 - **Java 8 or later+**
