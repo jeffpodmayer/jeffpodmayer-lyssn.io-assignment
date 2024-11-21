@@ -3,7 +3,6 @@ package domain;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 public class User {
     Long userId;
@@ -48,7 +47,7 @@ public class User {
         return signUpDate;
     }
 
-    public void setSignUpdate(Timestamp signUpdate) {
+    public void setSignUpdate(Timestamp signUpDate) {
         this.signUpDate = signUpDate;
     }
 
@@ -63,7 +62,7 @@ public class User {
         return DriverManager.getConnection(url);
     }
 
-    public static Collection<User> getAllUsers() throws SQLException {
+    public static Collection<User> getAllUsers() {
         Collection<User> users = new ArrayList<>();
         String query = "SELECT * FROM Users";
         try (Connection connection = getConnection();
@@ -113,7 +112,7 @@ public class User {
                     String name = resultSet.getString("name");
                     Timestamp signupdate = resultSet.getTimestamp("signupdate");
 
-                    return new User(userId, fName, name, signupdate);
+                    return new User(userid, fName, name, signupdate);
                 }
             }
         } catch (SQLException e) {
