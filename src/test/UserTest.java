@@ -1,6 +1,6 @@
 package test;
 
-import domain.User;
+import io.lyssn.assignment.User;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,7 +17,7 @@ public class UserTest {
     @Test
     void testDatabaseConnection(){
         try(Connection connection = User.getConnection()){
-            assertNotNull(connection, "Not null!");
+            assertNotNull(connection);
             System.out.println("Success!");
         } catch (SQLException e){
             e.printStackTrace();
@@ -55,14 +55,14 @@ public class UserTest {
     }
 
     @Test
-    void testGetAllUsers(){
+    void testGetAllUsers() throws SQLException {
         Collection<User> users = User.getAllUsers();
         assertNotNull(users);
         assertEquals(5,users.size());
     }
 
     @Test
-    void testGetUserByUserId(){
+    void testGetUserByUserId() throws SQLException {
         User user = User.getUserByUserId(5L);
         assertNotNull(user);
         System.out.println(user);
