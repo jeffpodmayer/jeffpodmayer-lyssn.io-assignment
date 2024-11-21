@@ -1,4 +1,4 @@
-package domain;
+package io.lyssn.assignment;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -56,7 +56,6 @@ public class User {
         return "User{userId=" + userId + ", fName=" + fName + " , name=" + name + " , signUpdate=" + signUpDate + "}";
     }
 
-   //Method to connect to a database
    public  static Connection getConnection() throws SQLException {
         String url = "jdbc:postgresql://localhost:5432/testdb";
         String username = "jeffreypodmayer";
@@ -64,7 +63,7 @@ public class User {
         return DriverManager.getConnection(url, username, password);
     }
 
-    public static Collection<User> getAllUsers() {
+    public static Collection<User> getAllUsers() throws SQLException {
         Collection<User> users = new ArrayList<>();
         String query = "SELECT * FROM Users";
         try (Connection connection = getConnection();
@@ -78,16 +77,14 @@ public class User {
                 Timestamp signupdate = rs.getTimestamp("signupdate");
                 users.add(new User(userid, fname, name, signupdate));
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+            }
         return users;
     }
 
     public static Boolean updateUser(User user) throws SQLException {
         String updateQuery = "UPDATE users SET fname = ?, name = ?, signupdate = ? WHERE userid = ?";
-        try(Connection connection = getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)){
+        try (Connection connection = getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
             preparedStatement.setString(1, user.getfName());
             preparedStatement.setString(2, user.getName());
             preparedStatement.setTimestamp(3, user.getSignUpdate());
@@ -95,19 +92,16 @@ public class User {
 
             int rowsUpdated = preparedStatement.executeUpdate();
             return rowsUpdated > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
         }
     }
 
-    public static User getUserByUserId(Long userId){
+    public static User getUserByUserId(Long userId) throws SQLException {
         String query = "SELECT * FROM users WHERE userid = ?";
-        try(Connection connection = getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(query)){
-            preparedStatement.setLong(1,userId);
+        try (Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setLong(1, userId);
 
-            try(ResultSet resultSet = preparedStatement.executeQuery()){
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     Long userid = resultSet.getLong("userid");
                     String fName = resultSet.getString("fName");
@@ -117,8 +111,6 @@ public class User {
                     return new User(userid, fName, name, signupdate);
                 }
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
         return null;
     }
