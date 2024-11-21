@@ -37,6 +37,7 @@ public class UserTest {
             stmt.execute("INSERT INTO users (userId, fname, name, signupdate) VALUES (5, 'Malcolm', 'Griffiths', '2024-11-22 09:30:00')");
 
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }
@@ -62,8 +63,13 @@ public class UserTest {
 
     @Test
     void testGetUserByUserId(){
+        User user = User.getUserByUserId(5L);
+        assertNotNull(user);
+        System.out.println(user);
 
-
+        assertEquals("Malcolm", user.getfName());
+        assertEquals("Griffiths", user.getName());
+        assertEquals(5L, user.getUserId());
     }
 
     @Test
@@ -73,7 +79,6 @@ public class UserTest {
 
         existingUser.setfName("Jonathan");
         boolean resultOfUpdate = User.updateUser(existingUser);
-
         assertTrue(resultOfUpdate);
 
         User updatedUser = User.getUserByUserId(2L);
