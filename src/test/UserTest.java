@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Collection;
@@ -14,24 +15,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class UserTest {
 
-    @Test
-    void testDatabaseConnection() throws SQLException {
-        try (Connection connection = User.getConnection()) {
-            assertNotNull(connection);
-            System.out.println("Success!");
-        }
-    }
-
     @BeforeEach
     void createUsersForTest() throws SQLException {
         try (Connection connection = User.getConnection()){
             Statement stmt = connection.createStatement();
 
-            stmt.execute("INSERT INTO users (userId, fname, name, signupdate) VALUES (1, 'Jeff', 'Podmayer', '2024-11-22 09:00:00')");
-            stmt.execute("INSERT INTO users (userId, fname, name, signupdate) VALUES (2, 'John', 'Meade', '2024-11-22 09:10:00')");
-            stmt.execute("INSERT INTO users (userId, fname, name, signupdate) VALUES (3, 'Dan', 'Ford', '2024-11-22 09:15:00')");
-            stmt.execute("INSERT INTO users (userId, fname, name, signupdate) VALUES (4, 'Carolyn', 'Blessing', '2024-11-22 09:20:00')");
-            stmt.execute("INSERT INTO users (userId, fname, name, signupdate) VALUES (5, 'Malcolm', 'Griffiths', '2024-11-22 09:30:00')");
+            stmt.execute("INSERT INTO users (userid, fname, name, signupdate) VALUES (1, 'Jeff', 'Podmayer', '2024-11-22 09:00:00')");
+            stmt.execute("INSERT INTO users (userid, fname, name, signupdate) VALUES (2, 'John', 'Meade', '2024-11-22 09:10:00')");
+            stmt.execute("INSERT INTO users (userid, fname, name, signupdate) VALUES (3, 'Dan', 'Ford', '2024-11-22 09:15:00')");
+            stmt.execute("INSERT INTO users (userid, fname, name, signupdate) VALUES (4, 'Carolyn', 'Blessing', '2024-11-22 09:20:00')");
+            stmt.execute("INSERT INTO users (userid, fname, name, signupdate) VALUES (5, 'Malcolm', 'Griffiths', '2024-11-22 09:30:00')");
             }
     }
 
@@ -42,6 +35,14 @@ public class UserTest {
 
             stmt.execute("DELETE FROM users");
             System.out.println("All users deleted.");
+        }
+    }
+
+    @Test
+    void testDatabaseConnection() throws SQLException {
+        try (Connection connection = User.getConnection()) {
+            assertNotNull(connection);
+            System.out.println("Success!");
         }
     }
 

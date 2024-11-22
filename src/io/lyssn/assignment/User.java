@@ -65,7 +65,7 @@ public class User {
 
     public static Collection<User> getAllUsers() throws SQLException {
         Collection<User> users = new ArrayList<>();
-        String query = "SELECT * FROM Users";
+        String query = "SELECT * FROM users";
         try (Connection connection = getConnection();
              Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
