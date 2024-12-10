@@ -11,6 +11,9 @@ public class User {
     Timestamp signUpDate;
 
     // Constructor
+    public User() {
+    }
+
     public User(Long userId, String fName, String name, Timestamp signUpDate) {
         this.userId = userId;
         this.fName = fName;
